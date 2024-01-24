@@ -1,56 +1,59 @@
 import turtle as trtl
 
-# Setting up an empty list for turtlesi
+# create an empty list of turtles
 my_turtles = []
 
-# Defining interesting shapes and colors for turtles
+# use interesting shapes and colors
 turtle_shapes = ["arrow", "turtle", "circle", "square", "triangle", "classic"]
 turtle_colors = ["red", "blue", "green", "orange", "purple", "gold"]
 
-# Creating turtles with specified shapes and adding them to the list
+# Iterate through turtle_shapes and create turtles with different shapes
 for s in turtle_shapes:
     t = trtl.Turtle(shape=s)
+
+    # Set the pen up when creating the turtle object
+    t.penup()
+
+    # Change color: pop the color from turtle_colors list
+    new_color = turtle_colors.pop()
+    t.fillcolor(new_color)
+    t.pencolor(new_color)
+
     my_turtles.append(t)
 
 # Starting position for turtles
 startx = 0
 starty = 0
 
-# Moving turtles to the starting position and drawing
+# Initialize direction variable
+direction = 90
+
+# Move turtles to the starting position and draw a hexagon
 for t in my_turtles:
+    # Set the pen up when creating the turtle object
+    t.penup()
+
+    # Move to the starting position and set the direction
     t.goto(startx, starty)
-    t.right(45)
-    t.forward(50)
+    t.setheading(direction)
 
-    # Updating start position for the next turtle
-    startx = startx + 50
-    starty = starty + 50
+    # Set the pen down after moving to the starting position
+    t.pendown()
 
-# Creating a turtle screen and keeping it open
+    # Draw a hexagon
+    for _ in range(6):
+        t.forward(50)
+        t.right(60)
+        t.left(30)
+        t.right(20)
+
+    # Update start position for the next turtle
+    startx = t.xcor()
+    starty = t.ycor()
+
+    # Save heading for the next turtle
+    direction = t.heading()
+
+# Create a turtle screen and keep it open
 wn = trtl.Screen()
 wn.mainloop()
-
-
-# Moving turtles to the starting position and setting the pen up
-for t in my_turtles:
-    t.penup()
-    t.goto(startx, starty)
-    t.pendown()
-    t.right(45)
-    t.forward(50)
-
-    # Updating start position for the next turtle
-    startx = startx + 50
-    starty = starty + 50
-
-# Moving turtles to the starting position and drawing where the last turtle left off
-prev_x, prev_y = startx, starty
-for t in my_turtles:
-    t.penup()
-    t.goto(prev_x, prev_y)
-    t.pendown()
-    t.right(45)
-    t.forward(50)
-
-    # Updating previous position for the next turtle
-    prev_x, prev_y = t.xcor(), t.ycor()
